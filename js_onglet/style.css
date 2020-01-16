@@ -1,0 +1,77 @@
+/* gestion de la disparition des blocks */
+.tab-content{
+    display: none;
+}
+
+.tab-content.active{
+    display: block;
+}
+
+.tabs .active a{
+    color: brown;
+}
+
+/* css generale */
+
+body{
+    background-color: white;
+    font-family: sans-serif;
+    padding: 50px;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+ul, li{
+    margin: 0;
+    padding:0;
+    list-style: none;
+}
+
+/* mise en forme des block */
+.tabs li{
+    float:left;
+    display:block;
+}
+
+.tabs:after{
+    display: table;
+    content: ' ';
+    clear: both;
+}
+
+.tabs a{
+    display: inline-block;
+    background-color: rgb(224, 224, 224);
+    box-shadow: 0 1px 3px rgba(0,0,0.12), 0 1 2px rgba(0,0,0.24);
+    padding: 15px 20px;
+    margin-left: 1px;
+    border: none;
+    border-bottom: black solid 1px;
+    border-radius: 5% 5% 0% 0%;
+}
+
+.tabs .active a{
+    background-color: wheat;
+}
+
+.tabs-content{
+    position: relative;
+    z-index: 4;
+    padding: 20px;
+    background-color: wheat;
+    box-shadow: 0 1px 3px rgba(0,0,0.12), 0 1 2px rgba(0,0,0.24);
+    margin-bottom: 50px;
+}
+
+/* gestion de la transition */
+.fade{
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.fade.in{
+    opacity: 1;
+}

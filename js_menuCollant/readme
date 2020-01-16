@@ -1,0 +1,8 @@
+Création d'un système de sticky pour le menu de navigation ou paragraphe.Ce script est fait en 100% Javascript.
+
+  - la fonction makeSticky peut être utilisée dans n'importe quels pages de votre site.
+  
+
+  - la fonction onResize permet la redimension des éléments selon la taille de la fenêtre.
+  
+  - la fonction onScroll permet de faire l'écoute de l'événement et ainsi changer les classes.

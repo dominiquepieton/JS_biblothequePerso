@@ -2,7 +2,7 @@
     /*
     *function pour lors d'un click sur onglet 
     */
-    var afficherOnglet = function (a, animations) {
+    window.afficherOnglet = function (a, animations) {
         if (animations === undefined) {
             animations = true
         }
@@ -18,11 +18,6 @@
         div.querySelector('.tabs .active').classList.remove('active')
                 // ajout de la class active à l'onglet actuel
         li.classList.add('active')
-        //retire la class active sur le contenu actif
-        //div.querySelector('.tab-content.active').classList.remove('active')
-        //ajout la class active sur le contenu cliquer
-        //div.querySelector(a.getAttribute('href')).classList.add('active')
-
             // verification de l'animation
         if (animations){
         //on ajoute la class fade sur l'element actif
@@ -62,8 +57,6 @@
         var hash = window.location.hash
         var a = document.querySelector('a[href="' + hash + '"]')
         //ajout de la class active sur le lien href="hash"
-        console.log(hash)
-        console.log(a)
         if(a !== null && !a.parentNode.classlist.contains('active')){
             afficherOnglet(a, false)
         }

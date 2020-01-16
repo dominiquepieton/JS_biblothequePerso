@@ -12,7 +12,7 @@
     }
 
     // function reutilisable
-    var makeSticky = function (element){
+        window.makeSticky = function (element){
         var rect = element.getBoundingClientRect()
         var offset = parseInt(element.getAttribute('data-offset') || 0, 10)
         if (element.getAttribute('data-constraint')){
@@ -77,7 +77,7 @@
             fakeElement.style.display = "block"
             onScroll()
         }
-    
+
         // Listener
         window.addEventListener('scroll', onScroll)
         window.addEventListener('resize', onResize)
@@ -90,3 +90,5 @@
     }     
 
 })()
+
+makeSticky(document.querySelector('#main2'));

@@ -1,0 +1,62 @@
+/* partie general */
+body, html{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+*{ box-sizing: border-box; } /* prend le padding pour les elements */
+ 
+/* partie modal */
+.modal{
+    position: fixed;
+    display: flex;
+    align-items: center; /* AXE Y */
+    justify-content: center; /* AXE X */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    animation: fadeIn .3s both;
+}
+
+.modal-wrapper{
+    overflow: auto; 
+    width: 600px;
+    max-width: calc(100vw - 20px); /* une fois la largeur de la taile de l'ecran  */
+    max-height: calc(100vh - 20px);
+    padding: 20px;
+    background-color: #fff;
+    animation: slideTop .5s both;
+}
+
+.modal[aria-hidden="true"]{
+    animation-name:fadeOut;
+}
+
+.modal[aria-hidden="true"] .modal-wrapper{
+    animation-name:slideBottom;
+}
+
+/* animation du modal */
+
+@keyframes fadeIn{
+    from {opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut{
+    from {opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes slideTop{
+    from { transform: translateY(-50px) }
+    to { transform: translateY(0px) }    
+}
+
+@keyframes slideBottom{
+    from { transform: translateY(0px) }
+    to { transform: translateY(50px) }    
+}

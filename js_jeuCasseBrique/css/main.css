@@ -14,11 +14,25 @@ body{
      font-family: sans-serif;
 }
 
+/* zone play */
+.play{
+    display: flex;
+}
+
+.regles{
+    align-items: center;
+    margin-left: 1200px;
+    width: 600px;
+    height: 700px;
+    background: whitesmoke;
+    color: black;
+}
+
 /* zone de jeu */
 .playfield{
     background: whitesmoke;
-    width: 1090px;
-    height: 650px;
+    width: 1040px;
+    height: 600px;
     top: 10%;
     left: 5%;
     position: absolute;
@@ -36,6 +50,58 @@ body{
     height: 14px;
     border-radius: 50px;
     background: dodgerblue;
+    box-shadow: 1px 2px 2px grey;
+    pointer-events: none;
+}
+
+/* ligne brick */
+.brick{
+    display: inline-block;
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    border: solid 2px black;
+    box-shadow: 1px 2px 2px grey;
+    pointer-events: none;
+}
+
+.blueBrick{
+    background: skyblue;
+}
+
+.redBrick{
+    background: tomato;
+}
+
+.yellowBrick{
+    background: lightgoldenrodyellow;
+}
+
+.greenBrick{
+    background: lightgreen;
+}
+
+/* affichage text */
+.lblCurrentLevel {
+    position: absolute;
+    left: 40%;
+    top: 44%;
+    z-index: 1;
+    font-size: 400%;
+    font-weight: bold;
+    text-shadow: 1px 1px 17px black;
+    pointer-events: none;
+}
+
+/* racket */
+.racket{
+    position: absolute;
+    width: 100px;
+    height: 14px;
+    bottom: 12px;
+    left: 320px;
+    border-radius: 4px;
+    background: goldenrod;
     box-shadow: 1px 2px 2px grey;
     pointer-events: none;
 }

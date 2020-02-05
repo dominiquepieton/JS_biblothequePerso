@@ -1,4 +1,4 @@
-// Initialisation des variables utile
+// Initialisation des variables globale
 let balls = [];
 let bricks = [];
 let curLevel;
@@ -7,6 +7,8 @@ let gameRefresh;
 let playfieldWidth;
 let playfieldheight;
 let ballSize;
+let playerScore = 0;
+let bestScore = 0;
 
 $(document).ready(init);
 
@@ -22,12 +24,10 @@ function init(){
     racket = { width: $('.racket').width(), top: $('.racket').offset().top - $('.playfield').offset().top };
     //deplacement
     $(window).on('mousemove', drawRacket);
-    gameRefresh = setInterval(drawBalls, 10);
-    // met en mémoire la taille de la balle utile pour un bonus en ajout d'un bouton
-    //ballSize = $('.ball:first').width();
-    //setInterval(addBall,5000);
-    // level
-    
+    //Sauvegarde du meilleur score
+    bestScore = localStorage.getItem('CB_bestScore') || 0;
+    $('.lblBestScore').text('Meilleur score :' + bestScore);
+    showPlayerScore();
 }
 
 /**
@@ -42,7 +42,7 @@ function createId(){
 }
 
 /**
- * function créer un balle et la place
+ * function créer un balle et la placer
  */
 function addBall() {
     let idBall = createId();
@@ -63,6 +63,15 @@ function addBall() {
 }
 
 /**
+ * lancer la partie
+ */
+function stargame(){
+    cleanMessage();
+    addBall();
+    gameRefresh = setInterval(drawBalls, 10);
+}
+
+/**
  * déplacement de la balle
  */
 function moveBall(e) {
@@ -80,8 +89,26 @@ function moveBall(e) {
  * gestion positionnement de la balle par rapport a la balle
  */
 function getNearBrick(e){
+    e.newDirection = undefined;
     return bricks.filter( function (f){
-        return f.top + 34 > e.top && f.left <= e.left && f.left + 100 >= e.left + ballSize; 
+        if (e.vSpeed < 0 && f.top + 30 > e.top && f.top < e.top && (f.left <= e.left && f.left + 100 >= e.left + ballSize)){
+            e.newDirection = { hSpeed: e.hSpeed,
+                               vSpeed: -e.vSpeed 
+                             };
+        } else if (e.vSpeed > 0 && e.top > f.top && e.top < f.top + 30 && (f.left <= e.left && f.left + 100 >= e.left + ballSize)){
+            e.newDirection = {hSpeed: e.hSpeed,
+                              vSpeed: -e.vSpeed
+                             };
+        } else if (e.hSpeed > 0 && e.left > f.left && e.left < f.left + 100 && (f.top <= e.top && f.top + 30 >= e.top + ballSize)){
+            e.newDirection = { hSpeed: -e.hSpeed,
+                               vSpeed: e.vSpeed 
+                             };
+        } else if (e.hSpeed < 0 && e.left < f.left && e.left > f.left + 100 && (f.top <= e.top && f.top + 30 >= e.top + ballSize)){
+            e.newDirection = { hSpeed: -e.hSpeed,
+                               vSpeed: e.vSpeed 
+                             };
+        }
+        return e.newDirection != undefined;
     });
 }
 
@@ -90,10 +117,18 @@ function getNearBrick(e){
  */
 function touchBrick(e, nearBricks){
     if (nearBricks.length > 0){
-        // suprimer la brique
+        // calcul de point quand la casse est supprimer
+        let points = 250 * (curLevel + 1);
+        playerScore += points;
+        showPlayerScore();
+        showBrickScore(nearBricks[0], points);
+        // supprimer la brique
         $('.brick[data-id="' + nearBricks[0].id + '"]').remove();
         bricks.splice(bricks.indexOf(nearBricks[0]), 1);
-        e.vSpeed = -e.vSpeed;
+        if (e.newDirection != undefined){
+            e.hSpeed = e.newDirection.hSpeed;
+            e.vSpeed = e.newDirection.vSpeed;
+        }
     }
 }
 
@@ -172,12 +207,29 @@ function drawPlayfield() {
                 },
                 1000,function (){
                     if(i == bricks.length - 1){
-                        addBall();
+                        showGamePanel();
                     }
                 });
         });
     });
 }
+
+/**
+ * mouvement de la raquette
+ */
+function drawRacket (e) {
+    if (gameRefresh != undefined){
+        racket.left = Math.min(playfieldWidth - racket.width, Math.max(2, e.offsetX));
+        $('.racket').css('left', racket.left + 'px');
+    }
+}
+
+/**
+ * 
+ */
+
+                                /* affichage message */
+
 
 /**
  * affichage du level
@@ -188,10 +240,69 @@ function showCurrentLevel(){
                          .animate({ opacity: 0}, 3000);
 }
 
+
 /**
- * mouvement de la raquette
+ * function message au debut du jeu 
  */
-function drawRacket (e) {
-    racket.left = Math.min(playfieldWidth - racket.width, Math.max(2, e.offsetX));
-    $('.racket').css('left', racket.left + 'px');
+function gameMessage(title, messageText, messageButton, buttonFunction){
+    $('body').append('<div class="messageBox"><label class="lblMessageTitle">' 
+        + title + '</label><label class="lblMessage">'
+        + messageText + '</label><button class="btnMessage"> '
+        + messageButton + '</button></div>');
+    
+    $('.btnMessage').on ('click', buttonFunction);
 }
+
+/**
+ * texte pour le message accueil
+ */
+function showGamePanel(){
+    gameMessage("Casse-Briques","Un petit jeu de raquette simple, mais trop plaisant...",
+                "Cliquez pour Jouer", stargame);
+}
+
+/**
+ * efface le message d'accueil
+ */
+function cleanMessage() {
+    $('.btnMessage').off();
+    $('.messageBox').remove();
+}
+
+/**
+ * affiche le score quand la brique est enlevée
+ */
+function showBrickScore(theBrick, thePoints){
+    playerScore += thePoints;
+    $('.playfield')
+        .append('<label class="lblBrickScore" data-id="' + theBrick.id + '">'
+        + thePoints + '</label>');
+    $('.lblBrickScore[data-id="' + theBrick.id + '"]')
+        .css({ top: (theBrick.top + 10) + 'px',
+               left: (theBrick.left + 36) + 'px'
+            });
+    $('.lblBrickScore[data-id="' + theBrick.id + '"]')
+        .animate({ top: (theBrick.top - 20) + 'px',
+                   opacity: 0 },
+                   1000,
+                   function (){
+                       $(this).remove();
+                   });
+}
+
+/**
+ * affiche le score totale
+ */
+function showPlayerScore(){
+    $('.lblPlayerScore').text('Score :' + playerScore);
+}
+
+
+
+
+
+
+/*
+function bonusGame(){
+    setInterval(addBall,5000);
+}*/

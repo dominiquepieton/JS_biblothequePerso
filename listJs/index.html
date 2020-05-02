@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Game List</title>
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Ajoutez un Jeux-video !</h1>
+            <form id="game-form">
+                <div class="inputs">
+                    <label for="titre">Titre</label>
+                    <input type="text" id="titre">
+                </div>
+                <div class="inputs">
+                    <label for="genre">Genre</label>
+                    <input type="text" id="genre">
+                </div>
+                <div class="inputs">
+                    <label for="support">Support</label>
+                    <input type="text" id="support">
+                </div>
+                <div class="inputs">
+                    <input type="submit" id="submit" value="Soumettre">
+                </div>
+            </form>
+            <hr>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Genre</th>
+                        <th>Support</th>
+                    </tr>
+                </thead>
+                <tbody id="game-list">
+                </tbody>
+            </table>
+        </div>
+        
+        <script src="app.js"></script>
+    </body>
+</html>

@@ -1,0 +1,87 @@
+/* Class Dynamique */
+
+.success, .error {
+    text-align: center;
+    color: white;
+    padding: 5px;
+    margin: 5px 0 15px 0;
+}
+
+.success {
+    background: rgba(22, 207, 99, 0.767);
+}
+
+.error {
+    background: rgba(200, 56, 51, 0.835);
+}
+
+.delete {
+    font-weight: 700;
+    color: red;
+    width: 10px;
+    height: 10px;
+    background: #f1f1f1;
+    text-decoration: none;
+    border: 2px solid black;
+    margin-top: 5px;
+}
+
+/* globale  */
+body {
+    font-family: 'Lato';
+}
+
+h1 {
+    text-align: center;
+    font-size: 50px;
+    letter-spacing: 2px;
+}
+
+label {
+    display: block;
+    width: 100px;
+    text-align: center;
+    margin: auto;
+    padding-bottom: 30px;
+}
+
+input {
+    display: block;
+    width: 50%;
+    height: 30px;
+    margin: 0 auto;
+}
+
+.inputs {
+    margin: 20px 20px;
+}
+
+#submit {
+    background: rgba(42, 42, 97, 0.808);
+    color: white;
+    width: 200px;
+    padding: 20px 20px;
+    line-height: 0px;
+    font-size: 18px;
+    border-radius: 30px;
+}
+
+/* tableau */
+
+table {
+    width: 100%;
+    margin: auto;
+}
+
+th {
+    width: 33%;
+}
+
+td {
+    text-align: center;
+    margin-top: 5px;
+}
+
+tr {
+    margin-top: 5px;
+}
